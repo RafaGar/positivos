@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,31 +25,39 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void siguiente(View view){
-        //int random = (int)(Math.random() * mensajes.length);
-        //textView.setText(mensajes[random]);
 
-        if(cont < mensajes.length+1){
+        if(cont + 1 < mensajes.length){
             cont = cont +1;
-            textView.setText(mensajes[cont]);
         }else{
-            textView.setText(mensajes[1]);
+            cont = 0;
         }
+        textView.setText(mensajes[cont]);
 
     }
     public void anterior(View view){
-        if(cont > 0){
+        if(cont - 1 >= 0){
             cont = cont -1;
-            textView.setText(mensajes[cont]);
         }else{
-            textView.setText(mensajes[mensajes.length-1]);
+            cont = mensajes.length - 1;
         }
+        textView.setText(mensajes[cont]);
 
 
     }
+    public void random(View view){
+        int random = (int)(Math.random() * mensajes.length);
+        cont = random;
+        textView.setText(mensajes[cont]);
+    }
     public void buscar(View view){
-        String ing = editText.toString();
-        int a = Integer.parseInt(ing);
-        textView.setText(mensajes[a]);
+        int flag = Integer.parseInt(editText.getText().toString());
+        if(flag < 0 || flag >= mensajes.length){
+            Toast toast = Toast.makeText(getApplicationContext(),"This number is not valid", Toast.LENGTH_SHORT);
+            toast.show();
+        }else{
+            cont = flag;
+        }
+        textView.setText(mensajes[cont]);
     }
     private String[] mensajes = {"Somos lo que pensamos. Todo lo que somos surge con nuestros pensamientos. Con nuestros pensamientos construimos el mundo.-Buddha.",
             "El pesimista ve dificultad en toda oportunidad. El optimista ve oportunidad en toda dificultad.-Winston Churchill.",
